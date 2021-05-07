@@ -14,6 +14,7 @@ pub mod command;
 pub mod prelude;
 pub mod transcript;
 pub mod vectors;
+pub mod zip0244;
 
 static INIT: Once = Once::new();
 
