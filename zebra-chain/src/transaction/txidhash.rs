@@ -45,7 +45,7 @@ impl<'a> TxIdHasher<'a> {
             zcash_primitives::consensus::BranchId::Nu5,
         )?;
 
-        Ok(Hash(alt_tx.txid().0))
+        Ok(Hash(*alt_tx.txid().as_ref()))
     }
 }
 
