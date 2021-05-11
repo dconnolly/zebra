@@ -20,12 +20,12 @@ impl<'a> TxIdHasher<'a> {
             Transaction::V1 { .. }
             | Transaction::V2 { .. }
             | Transaction::V3 { .. }
-            | Transaction::V4 { .. } => self.txid_v4(),
-            Transaction::V5 { .. } => self.txid_v5(),
+            | Transaction::V4 { .. } => self.txid_v1_to_v4(),
+            Transaction::V5 { network_upgrade, .. } => self.txid_v5(network_upgrade),
         }
     }
 
-    fn txid_v4(self) -> Result<Hash, io::Error> {
+    fn txid_v1_to_v4(self) -> Result<Hash, io::Error> {
         let mut hash_writer = sha256d::Writer::default();
         self.trans
             .zcash_serialize(&mut hash_writer)
@@ -33,17 +33,17 @@ impl<'a> TxIdHasher<'a> {
         Ok(Hash(hash_writer.finish()))
     }
 
-    fn txid_v5(self) -> Result<Hash, io::Error> {
+    fn txid_v5(self, network_upgrade: NetworkUpgrade) -> Result<Hash, io::Error> {
         // The v5 txid (from ZIP-244) is computed using librustzcash. Convert the zebra
         // transaction to a librustzcash transaction.
 
         let serialized_tx = self.trans.zcash_serialize_to_vec()?;
-        // The `read` method ignores the passed BranchId for V5 transactions;
-        // we arbitrarly pass `Nu5`.
-        let alt_tx = zcash_primitives::transaction::Transaction::read(
-            &serialized_tx[..],
-            zcash_primitives::consensus::BranchId::Nu5,
-        )?;
+        // The `read` method currently ignores the BranchId for V5 transactions;
+        // but we use the correct BranchId anyway.
+        let branch_id: u32 = network_upgrade.branch_id().into();
+        // We've already parsed this transaction, so its network upgrade must be valid.
+        let branch_id = branch_id.try_into::<zcash_primitives::consensus::BranchId>().expect("zcash_primitives and Zebra have the same branch ids");
+        let alt_tx = zcash_primitives::transaction::Transaction::read(&serialized_tx[..], branch_id)?;
 
         Ok(Hash(*alt_tx.txid().as_ref()))
     }

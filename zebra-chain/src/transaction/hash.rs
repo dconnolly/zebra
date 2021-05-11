@@ -20,9 +20,7 @@ pub struct Hash(pub [u8; 32]);
 impl<'a> From<&'a Transaction> for Hash {
     fn from(transaction: &'a Transaction) -> Self {
         let hasher = TxIdHasher::new(&transaction);
-        let txid = hasher.txid();
-        // XXX: avoid unwrap here?
-        txid.unwrap()
+       hasher.txid().expect("zcash_primitives and Zebra transaction formats must be compatible")
     }
 }
 
