@@ -1,5 +1,7 @@
+//! Contains test vectors for ZIP-0244 data (transaction IDs, signature hashes).
 use lazy_static::lazy_static;
 
+/// A ZIP-244 test vector with the transaction input and expected outputs.
 pub struct TestVector {
     pub tx: Vec<u8>,
     pub txid: [u8; 32],
@@ -15,7 +17,8 @@ pub struct TestVector {
 }
 
 lazy_static! {
-    // From https://github.com/zcash-hackworks/zcash-test-vectors/blob/master/zip_0244.py
+    /// Array of ZIP-244 test vectors.
+    /// From https://github.com/zcash-hackworks/zcash-test-vectors/blob/master/zip_0244.py
     pub static ref TEST_VECTORS: Vec<TestVector> = vec![
         // TODO: tx without Orchard for testing while support is not added
         TestVector {
