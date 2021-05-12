@@ -174,16 +174,8 @@ fn empty_v5_librustzcash_round_trip() {
     zebra_test::init();
 
     let tx: &Transaction = &*EMPTY_V5_TX;
-    let data = tx.zcash_serialize_to_vec().expect("tx should serialize");
-
-    let branch_id: u32 = NetworkUpgrade::Nu5
-        .branch_id()
-        .expect("Network upgrade must have a Branch ID")
-        .into();
-    let branch_id: zcash_primitives::consensus::BranchId = branch_id
+    let _alt_tx: zcash_primitives::transaction::Transaction = tx
         .try_into()
-        .expect("zcash_primitives and Zebra have the same branch ids");
-    let _alt_tx = zcash_primitives::transaction::Transaction::read(&data[..], branch_id)
         .expect("librustzcash deserialization might work for empty zebra serialized transactions. Hint: if empty transactions fail, but other transactions work, delete this test");
 }
 
@@ -377,25 +369,10 @@ fn fake_v5_librustzcash_round_trip_for_network(network: Network) {
                 "v1-v4 transaction data must change when converted to fake v5"
             );
 
-            let network_upgrade = match fake_tx.as_ref() {
-                Transaction::V5 {
-                    network_upgrade, ..
-                } => network_upgrade,
-                _ => panic!("Transaction must be V5"),
-            };
-
-            let branch_id: u32 = network_upgrade
-                .branch_id()
-                .expect("Network upgrade must have a Branch ID")
-                .into();
-            let branch_id: zcash_primitives::consensus::BranchId = branch_id
+            let _alt_tx: zcash_primitives::transaction::Transaction = fake_tx
+                .as_ref()
                 .try_into()
-                .expect("zcash_primitives and Zebra have the same branch ids");
-            let _alt_tx =
-                zcash_primitives::transaction::Transaction::read(&fake_bytes[..], branch_id)
-                    .expect(
-                        "librustzcash deserialization must work for zebra serialized transactions",
-                    );
+                .expect("librustzcash deserialization must work for zebra serialized transactions");
         }
     }
 }

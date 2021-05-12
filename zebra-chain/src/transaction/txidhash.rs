@@ -2,14 +2,9 @@
 //! from the transaction, using hashing.
 use std::{convert::TryInto, io};
 
-use zcash_primitives::consensus::BranchId;
-
 use super::Transaction;
 
-use crate::{
-    parameters::NetworkUpgrade,
-    serialization::{sha256d, ZcashSerialize},
-};
+use crate::serialization::{sha256d, ZcashSerialize};
 
 use super::Hash;
 
@@ -33,9 +28,7 @@ impl<'a> TxIdHasher<'a> {
             | Transaction::V2 { .. }
             | Transaction::V3 { .. }
             | Transaction::V4 { .. } => self.txid_v1_to_v4(),
-            Transaction::V5 {
-                network_upgrade, ..
-            } => self.txid_v5(network_upgrade),
+            Transaction::V5 { .. } => self.txid_v5(),
         }
     }
 
@@ -52,24 +45,10 @@ impl<'a> TxIdHasher<'a> {
     /// Compute the Transaction ID for a V5 transaction in the given network upgrade.
     /// In this case it's the hash of a tree of hashes of specific parts of the
     /// transaction, as specified in ZIP-244 and ZIP-225.
-    fn txid_v5(self, network_upgrade: &NetworkUpgrade) -> Result<Hash, io::Error> {
+    fn txid_v5(self) -> Result<Hash, io::Error> {
         // The v5 txid (from ZIP-244) is computed using librustzcash. Convert the zebra
         // transaction to a librustzcash transaction.
-
-        let serialized_tx = self.trans.zcash_serialize_to_vec()?;
-        // The `read` method currently ignores the BranchId for V5 transactions;
-        // but we use the correct BranchId anyway.
-        let branch_id: u32 = network_upgrade
-            .branch_id()
-            .expect("Network upgrade must have a Branch ID")
-            .into();
-        // We've already parsed this transaction, so its network upgrade must be valid.
-        let branch_id: BranchId = branch_id
-            .try_into()
-            .expect("zcash_primitives and Zebra have the same branch ids");
-        let alt_tx =
-            zcash_primitives::transaction::Transaction::read(&serialized_tx[..], branch_id)?;
-
+        let alt_tx: zcash_primitives::transaction::Transaction = self.trans.try_into()?;
         Ok(Hash(*alt_tx.txid().as_ref()))
     }
 }
