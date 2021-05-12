@@ -184,7 +184,7 @@ fn empty_v5_librustzcash_round_trip() {
         .try_into()
         .expect("zcash_primitives and Zebra have the same branch ids");
     let _alt_tx = zcash_primitives::transaction::Transaction::read(&data[..], branch_id)
-        .expect("librustzcash deserialization must work for zebra serialized transactions");
+        .expect("librustzcash deserialization might work for empty zebra serialized transactions. Hint: if empty transactions fail, but other transactions work, delete this test");
 }
 
 /// Do a round-trip test on fake v5 transactions created from v4 transactions
