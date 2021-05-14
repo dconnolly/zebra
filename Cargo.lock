@@ -1160,7 +1160,7 @@ dependencies = [
 [[package]]
 name = "equihash"
 version = "0.1.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#d7169af8eff2926ab17fa06186f84eb0c0347f5c"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -4555,7 +4555,7 @@ dependencies = [
 [[package]]
 name = "zcash_note_encryption"
 version = "0.0.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#d7169af8eff2926ab17fa06186f84eb0c0347f5c"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -4569,7 +4569,7 @@ dependencies = [
 [[package]]
 name = "zcash_primitives"
 version = "0.5.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#d7169af8eff2926ab17fa06186f84eb0c0347f5c"
 dependencies = [
  "aes",
  "bitvec 0.18.5",
@@ -4578,7 +4578,7 @@ dependencies = [
  "bls12_381 0.3.1",
  "byteorder",
  "crypto_api_chachapoly",
- "equihash 0.1.0 (git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225)",
+ "equihash 0.1.0 (git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust)",
  "ff 0.8.0",
  "fpe",
  "funty",

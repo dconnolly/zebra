@@ -14,4 +14,4 @@ pub use x25519_dalek as x25519;
 
 pub use proofs::{Bctv14Proof, Groth16Proof, Halo2Proof, ZkSnarkProof};
 
-mod zcash_primitives;
+pub(crate) mod zcash_primitives;

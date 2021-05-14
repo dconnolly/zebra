@@ -390,3 +390,33 @@ fn zip244_txid() -> Result<()> {
 
     Ok(())
 }
+
+#[test]
+fn zip244_sighash() -> Result<()> {
+    zebra_test::init();
+
+    // TODO: we don't support Orchard deserialization yet; so test it only
+    // with a fixed transaction that does not use it
+    for test in zip0244::TEST_VECTORS[0..1].iter() {
+        let transaction = test.tx.zcash_deserialize_into::<Transaction>()?;
+        let input = match test.amount {
+            Some(amount) => Some((
+                0,
+                transparent::Output {
+                    value: amount.try_into()?,
+                    lock_script: transparent::Script(
+                        test.script_code
+                            .as_ref()
+                            .expect("test vector must have script_code when it has amount")
+                            .to_vec(),
+                    ),
+                },
+            )),
+            None => None,
+        };
+        let h = transaction.sighash(NetworkUpgrade::Nu5, HashType::ALL, input);
+        assert_eq!(h.as_ref(), test.sighash_all);
+    }
+
+    Ok(())
+}

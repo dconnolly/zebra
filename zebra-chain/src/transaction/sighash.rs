@@ -15,6 +15,8 @@ use byteorder::{LittleEndian, WriteBytesExt};
 
 use std::io::{self, Write};
 
+use crate::primitives::zcash_primitives::sighash_v5;
+
 static ZIP143_EXPLANATION: &str = "Invalid transaction version: after Overwinter activation transaction versions 1 and 2 are rejected";
 static ZIP243_EXPLANATION: &str = "Invalid transaction version: after Sapling activation transaction versions 1, 2, and 3 are rejected";
 
@@ -88,9 +90,7 @@ impl<'a> SigHasher<'a> {
             Sapling | Blossom | Heartwood | Canopy => self
                 .hash_sighash_zip243(&mut hash)
                 .expect("serialization into hasher never fails"),
-            Nu5 => unimplemented!(
-                "Nu5 upgrade uses a new transaction digest algorithm, as specified in ZIP-244"
-            ),
+            Nu5 => return self.hash_sighash_zip244(),
         }
 
         hash.finalize()
@@ -513,6 +513,15 @@ impl<'a> SigHasher<'a> {
         writer.write_all(&value_balance.to_bytes())?;
 
         Ok(())
+    }
+
+    /// Compute a signature hash for V5 transactions according to ZIP-244.
+    fn hash_sighash_zip244(&self) -> Hash {
+        let input = self
+            .input
+            .as_ref()
+            .map(|(output, input, idx)| (output, *input, *idx));
+        sighash_v5(&self.trans, &self.hash_type, input)
     }
 }
 

@@ -44,8 +44,10 @@ sha2 = { version = "0.9.5", features=["compress"] }
 subtle = "2.4"
 thiserror = "1"
 x25519-dalek = { version = "1.1", features = ["serde"] }
-# TODO: change after PR is accepted. This is a commit from the feature/zip-225 branch
-zcash_primitives = { git = "https://github.com/nuttycom/librustzcash", branch = "feature/zip-225" }
+# This points to a branch in our fork that is based on PR 375 ( https://github.com/zcash/librustzcash/pull/375 )
+# and some additional adjustments to work with zebra.
+# TODO: point back to the original repo when these are merged
+zcash_primitives = { git = "https://github.com/ZcashFoundation/librustzcash", branch = "zip-244-zebra-adjust" }
 
 proptest = { version = "0.10", optional = true }
 proptest-derive = { version = "0.3.0", optional = true }
