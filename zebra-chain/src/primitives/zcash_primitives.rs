@@ -10,6 +10,7 @@ use crate::{
     amount::{Amount, NonNegative},
     serialization::ZcashSerialize,
     transaction::HashType,
+    transaction::SignatureHash,
     transaction::Transaction,
     transparent::{self, Script},
 };
@@ -81,7 +82,7 @@ pub(crate) fn sighash_v5(
     trans: &Transaction,
     hash_type: &HashType,
     input: Option<(&transparent::Output, &transparent::Input, usize)>,
-) -> blake2b_simd::Hash {
+) -> SignatureHash {
     let alt_tx: zcash_primitives::transaction::Transaction = trans
         .try_into()
         .expect("zcash_primitives and Zebra transaction formats must be compatible");
@@ -104,5 +105,5 @@ pub(crate) fn sighash_v5(
         None => zcash_primitives::transaction::sighash::SignableInput::Shielded,
     };
 
-    alt_tx.sighash(signable_input, hash_type.bits()).into()
+    SignatureHash(*alt_tx.sighash(signable_input, hash_type.bits()).as_ref())
 }

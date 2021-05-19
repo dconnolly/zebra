@@ -10,10 +10,12 @@ use crate::{
     transparent,
 };
 
-use blake2b_simd::Hash;
 use byteorder::{LittleEndian, WriteBytesExt};
 
-use std::io::{self, Write};
+use std::{
+    convert::TryInto,
+    io::{self, Write},
+};
 
 use crate::primitives::zcash_primitives::sighash_v5;
 
@@ -41,6 +43,22 @@ bitflags::bitflags! {
 impl HashType {
     fn masked(self) -> Self {
         Self::from_bits_truncate(self.bits & 0b0001_1111)
+    }
+}
+
+/// A Signature Hash (or SIGHASH) as specified in
+/// https://zips.z.cash/protocol/protocol.pdf#sighash
+pub struct Hash(pub [u8; 32]);
+
+impl AsRef<[u8; 32]> for Hash {
+    fn as_ref(&self) -> &[u8; 32] {
+        &self.0
+    }
+}
+
+impl AsRef<[u8]> for Hash {
+    fn as_ref(&self) -> &[u8] {
+        &self.0
     }
 }
 
@@ -93,7 +111,7 @@ impl<'a> SigHasher<'a> {
             Nu5 => return self.hash_sighash_zip244(),
         }
 
-        hash.finalize()
+        Hash(hash.finalize().as_ref().try_into().unwrap())
     }
 
     fn consensus_branch_id(&self) -> ConsensusBranchId {
@@ -610,7 +628,7 @@ mod test {
 
         let hash = hasher.sighash();
         let expected = "a1f1a4e5cd9bd522322d661edd2af1bf2a7019cfab94ece18f4ba935b0a19073";
-        let result = hex::encode(hash.as_bytes());
+        let result = hex::encode(hash);
         let span = tracing::span!(
             tracing::Level::ERROR,
             "compare_final",
@@ -688,7 +706,7 @@ mod test {
 
         let hash = hasher.sighash();
         let expected = "23652e76cb13b85a0e3363bb5fca061fa791c40c533eccee899364e6e60bb4f7";
-        let result = hash.as_bytes();
+        let result: &[u8] = hash.as_ref();
         let result = hex::encode(result);
         let span = tracing::span!(
             tracing::Level::ERROR,
@@ -771,7 +789,7 @@ mod test {
 
         let hash = hasher.sighash();
         let expected = "63d18534de5f2d1c9e169b73f9c783718adbef5c8a7d55b5e7a37affa1dd3ff3";
-        let result = hex::encode(hash.as_bytes());
+        let result = hex::encode(hash);
         let span = tracing::span!(
             tracing::Level::ERROR,
             "compare_final",
@@ -869,7 +887,7 @@ mod test {
 
         let hash = hasher.sighash();
         let expected = "bbe6d84f57c56b29b914c694baaccb891297e961de3eb46c68e3c89c47b1a1db";
-        let result = hex::encode(hash.as_bytes());
+        let result = hex::encode(hash);
         let span = tracing::span!(
             tracing::Level::ERROR,
             "compare_final",
@@ -973,7 +991,7 @@ mod test {
 
         let hash = hasher.sighash();
         let expected = "f3148f80dfab5e573d5edfe7a850f5fd39234f80b5429d3a57edcc11e34c585b";
-        let result = hex::encode(hash.as_bytes());
+        let result = hex::encode(hash);
         let span = tracing::span!(
             tracing::Level::ERROR,
             "compare_final",
