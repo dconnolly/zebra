@@ -17,7 +17,7 @@ use std::{
     io::{self, Write},
 };
 
-use crate::primitives::zcash_primitives::sighash_v5;
+use crate::primitives::zcash_primitives::sighash;
 
 static ZIP143_EXPLANATION: &str = "Invalid transaction version: after Overwinter activation transaction versions 1 and 2 are rejected";
 static ZIP243_EXPLANATION: &str = "Invalid transaction version: after Sapling activation transaction versions 1, 2, and 3 are rejected";
@@ -48,6 +48,7 @@ impl HashType {
 
 /// A Signature Hash (or SIGHASH) as specified in
 /// https://zips.z.cash/protocol/protocol.pdf#sighash
+#[derive(Copy, Clone, Eq, PartialEq, Hash, Serialize, Deserialize, Debug)]
 pub struct Hash(pub [u8; 32]);
 
 impl AsRef<[u8; 32]> for Hash {
@@ -539,7 +540,7 @@ impl<'a> SigHasher<'a> {
             .input
             .as_ref()
             .map(|(output, input, idx)| (output, *input, *idx));
-        sighash_v5(&self.trans, &self.hash_type, input)
+        sighash(&self.trans, self.network_upgrade, self.hash_type, input)
     }
 }
 

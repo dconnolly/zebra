@@ -8,6 +8,7 @@ use std::{
 
 use crate::{
     amount::{Amount, NonNegative},
+    parameters::NetworkUpgrade,
     serialization::ZcashSerialize,
     transaction::HashType,
     transaction::SignatureHash,
@@ -35,21 +36,25 @@ impl TryFrom<&Transaction> for zcash_primitives::transaction::Transaction {
             | Transaction::V4 { .. } => panic!("Zebra only uses librustzcash for V5 transactions"),
         };
 
-        let serialized_tx = trans.zcash_serialize_to_vec()?;
-        // The `read` method currently ignores the BranchId for V5 transactions;
-        // but we use the correct BranchId anyway.
-        let branch_id: u32 = network_upgrade
-            .branch_id()
-            .expect("Network upgrade must have a Branch ID")
-            .into();
-        // We've already parsed this transaction, so its network upgrade must be valid.
-        let branch_id: zcash_primitives::consensus::BranchId = branch_id
-            .try_into()
-            .expect("zcash_primitives and Zebra have the same branch ids");
-        let alt_tx =
-            zcash_primitives::transaction::Transaction::read(&serialized_tx[..], branch_id)?;
-        Ok(alt_tx)
+        convert_tx_to_librustzcash(trans, *network_upgrade)
     }
+}
+
+fn convert_tx_to_librustzcash(
+    trans: &Transaction,
+    network_upgrade: NetworkUpgrade,
+) -> Result<zcash_primitives::transaction::Transaction, io::Error> {
+    let serialized_tx = trans.zcash_serialize_to_vec()?;
+    let branch_id: u32 = network_upgrade
+        .branch_id()
+        .expect("Network upgrade must have a Branch ID")
+        .into();
+    // We've already parsed this transaction, so its network upgrade must be valid.
+    let branch_id: zcash_primitives::consensus::BranchId = branch_id
+        .try_into()
+        .expect("zcash_primitives and Zebra have the same branch ids");
+    let alt_tx = zcash_primitives::transaction::Transaction::read(&serialized_tx[..], branch_id)?;
+    Ok(alt_tx)
 }
 
 /// Convert a Zebra Amount into a librustzcash one.
@@ -68,23 +73,24 @@ impl From<&Script> for zcash_primitives::legacy::Script {
     }
 }
 
-/// Compute a signature hash for a V5 transaction using librustzcash.
+/// Compute a signature hash using librustzcash.
 ///
 /// # Inputs
 ///
 /// - `transaction`: the transaction whose signature hash to compute.
+/// - `network_upgrade`: the network upgrade of the block containing the transaction.
 /// - `hash_type`: the type of hash (SIGHASH) being used.
 /// - `input`: information about the transparent input for which this signature
 ///     hash is being computed, if any. A tuple with the matching output of the
 ///     previous transaction, the input itself, and the index of the input in
 ///     the transaction.
-pub(crate) fn sighash_v5(
+pub(crate) fn sighash(
     trans: &Transaction,
-    hash_type: &HashType,
+    network_upgrade: NetworkUpgrade,
+    hash_type: HashType,
     input: Option<(&transparent::Output, &transparent::Input, usize)>,
 ) -> SignatureHash {
-    let alt_tx: zcash_primitives::transaction::Transaction = trans
-        .try_into()
+    let alt_tx = convert_tx_to_librustzcash(trans, network_upgrade)
         .expect("zcash_primitives and Zebra transaction formats must be compatible");
 
     let script: zcash_primitives::legacy::Script;
