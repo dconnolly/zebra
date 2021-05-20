@@ -549,6 +549,6 @@ impl<'a> SigHasher<'a> {
             .input
             .as_ref()
             .map(|(output, input, idx)| (output, *input, *idx));
-        sighash(&self.trans, self.network_upgrade, self.hash_type, input)
+        sighash(&self.trans, self.hash_type, self.network_upgrade, input)
     }
 }

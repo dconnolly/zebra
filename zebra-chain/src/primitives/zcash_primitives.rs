@@ -78,16 +78,16 @@ impl From<&Script> for zcash_primitives::legacy::Script {
 /// # Inputs
 ///
 /// - `transaction`: the transaction whose signature hash to compute.
-/// - `network_upgrade`: the network upgrade of the block containing the transaction.
 /// - `hash_type`: the type of hash (SIGHASH) being used.
+/// - `network_upgrade`: the network upgrade of the block containing the transaction.
 /// - `input`: information about the transparent input for which this signature
 ///     hash is being computed, if any. A tuple with the matching output of the
 ///     previous transaction, the input itself, and the index of the input in
 ///     the transaction.
 pub(crate) fn sighash(
     trans: &Transaction,
-    network_upgrade: NetworkUpgrade,
     hash_type: HashType,
+    network_upgrade: NetworkUpgrade,
     input: Option<(&transparent::Output, &transparent::Input, usize)>,
 ) -> SignatureHash {
     let alt_tx = convert_tx_to_librustzcash(trans, network_upgrade)

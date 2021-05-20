@@ -638,6 +638,15 @@ fn test_vec243_1() -> Result<()> {
     let _guard = span.enter();
     assert_eq!(expected, result);
 
+    let alt_sighash = crate::primitives::zcash_primitives::sighash(
+        &transaction,
+        HashType::ALL,
+        NetworkUpgrade::Sapling,
+        None,
+    );
+    let result = hex::encode(alt_sighash);
+    assert_eq!(expected, result);
+
     Ok(())
 }
 
@@ -734,6 +743,21 @@ fn test_vec243_2() -> Result<()> {
         buf.len = result.len()
     );
     let _guard = span.enter();
+    assert_eq!(expected, result);
+
+    let lock_script = Script(hex::decode("00")?);
+    let prevout = transparent::Output { value, lock_script };
+    let index = input_ind as usize;
+    let inputs = transaction.inputs();
+    let input = Some((&prevout, &inputs[index], index));
+
+    let alt_sighash = crate::primitives::zcash_primitives::sighash(
+        &transaction,
+        HashType::NONE,
+        NetworkUpgrade::Sapling,
+        input,
+    );
+    let result = hex::encode(alt_sighash);
     assert_eq!(expected, result);
 
     Ok(())
@@ -840,6 +864,23 @@ fn test_vec243_3() -> Result<()> {
     let _guard = span.enter();
     assert_eq!(expected, result);
 
+    let lock_script = Script(hex::decode(
+        "1976a914507173527b4c3318a2aecd793bf1cfed705950cf88ac",
+    )?);
+    let prevout = transparent::Output { value, lock_script };
+    let index = input_ind as usize;
+    let inputs = transaction.inputs();
+    let input = Some((&prevout, &inputs[index], index));
+
+    let alt_sighash = crate::primitives::zcash_primitives::sighash(
+        &transaction,
+        HashType::ALL,
+        NetworkUpgrade::Sapling,
+        input,
+    );
+    let result = hex::encode(alt_sighash);
+    assert_eq!(expected, result);
+
     Ok(())
 }
 
@@ -905,14 +946,14 @@ fn librustzcash_sighash_for_network(network: Network) {
 
         let network_upgrade = NetworkUpgrade::current(network, Height(*height));
 
-        // test each transaction
-        for original_tx in original_block.transactions.iter() {
+        // Test each transaction. Skip the coinbase transaction
+        for original_tx in original_block.transactions.iter().skip(1) {
             let original_sighash = original_tx.sighash(network_upgrade, HashType::ALL, None);
 
             let alt_sighash = crate::primitives::zcash_primitives::sighash(
                 original_tx,
-                network_upgrade,
                 HashType::ALL,
+                network_upgrade,
                 None,
             );
 
