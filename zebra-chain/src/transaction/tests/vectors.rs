@@ -888,9 +888,7 @@ fn test_vec243_3() -> Result<()> {
 fn zip244_sighash() -> Result<()> {
     zebra_test::init();
 
-    // TODO: we don't support Orchard deserialization yet; so test it only
-    // with a fixed transaction that does not use it
-    for test in zip0244::TEST_VECTORS[0..1].iter() {
+    for test in zip0244::TEST_VECTORS.iter() {
         let transaction = test.tx.zcash_deserialize_into::<Transaction>()?;
         let input = match test.amount {
             Some(amount) => Some((
