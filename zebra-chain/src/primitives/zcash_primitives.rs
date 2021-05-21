@@ -22,7 +22,10 @@ impl TryFrom<&Transaction> for zcash_primitives::transaction::Transaction {
             Transaction::V5 {
                 network_upgrade, ..
             } => network_upgrade,
-            Transaction::V1 { .. } | Transaction::V2 { .. } |  Transaction::V3 { .. } |  Transaction::V4 { .. } => panic!("Zebra only uses librustzcash for V5 transactions"),
+            Transaction::V1 { .. }
+            | Transaction::V2 { .. }
+            | Transaction::V3 { .. }
+            | Transaction::V4 { .. } => panic!("Zebra only uses librustzcash for V5 transactions"),
         };
 
         let serialized_tx = trans.zcash_serialize_to_vec()?;
