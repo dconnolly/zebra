@@ -23,7 +23,7 @@ lazy_static! {
         inputs: Vec::new(),
         outputs: Vec::new(),
         sapling_shielded_data: None,
-	orchard_shielded_data: None,
+        orchard_shielded_data: None,
     };
 }
 
@@ -381,9 +381,7 @@ fn fake_v5_librustzcash_round_trip_for_network(network: Network) {
 fn zip244_txid() -> Result<()> {
     zebra_test::init();
 
-    // TODO: we don't support Orchard deserialization yet; so test it only
-    // with a fixed transaction that does not use it
-    for test in zip0244::TEST_VECTORS[0..1].iter() {
+    for test in zip0244::TEST_VECTORS.iter() {
         let transaction = test.tx.zcash_deserialize_into::<Transaction>()?;
         let hasher = TxIdHasher::new(&transaction);
         let txid = hasher.txid()?;
