@@ -171,6 +171,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23b62fc65de8e4e7f52534fb52b0f3ed04746ae267519eef2a83941e8085068b"
 
 [[package]]
+name = "arrayvec"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5a2f58b0bb10c380af2b26e57212856b8c9a59e0925b4c20f4a174a49734eaf7"
+
+[[package]]
 name = "async-stream"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1154,7 +1160,7 @@ dependencies = [
 [[package]]
 name = "equihash"
 version = "0.1.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#2c240852d7a5a78e323cf5784a10bf88035e078b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -1566,7 +1572,7 @@ checksum = "62aca2aba2d62b4a7f5b33f3712cb1b0692779a56fb510499d5c0aa594daeaf3"
 [[package]]
 name = "halo2"
 version = "0.0.1"
-source = "git+https://github.com/zcash/halo2.git?rev=6acacf1aca12f34fc311aa59056e40adc0e6d8bd#6acacf1aca12f34fc311aa59056e40adc0e6d8bd"
+source = "git+https://github.com/zcash/halo2.git?rev=cae6f6af725cf1f5bc94e126a0b41e9ac602a302#cae6f6af725cf1f5bc94e126a0b41e9ac602a302"
 dependencies = [
  "blake2b_simd",
  "crossbeam-utils 0.8.0",
@@ -2353,15 +2359,16 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 [[package]]
 name = "orchard"
 version = "0.0.0"
-source = "git+https://github.com/zcash/orchard?branch=main#3117187280be3ddb348b5a10efa886cd2fa1001f"
+source = "git+https://github.com/zcash/orchard?branch=main#7109153e88c245c29707c46ffeb69c92998eec22"
 dependencies = [
  "aes",
+ "arrayvec 0.7.0",
  "bitvec 0.20.1",
  "blake2b_simd",
  "ff 0.9.0",
  "fpe",
  "group 0.9.0",
- "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=6acacf1aca12f34fc311aa59056e40adc0e6d8bd)",
+ "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=cae6f6af725cf1f5bc94e126a0b41e9ac602a302)",
  "nonempty",
  "pasta_curves",
  "rand 0.7.3",
@@ -4548,7 +4555,7 @@ dependencies = [
 [[package]]
 name = "zcash_note_encryption"
 version = "0.0.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#2c240852d7a5a78e323cf5784a10bf88035e078b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -4562,7 +4569,7 @@ dependencies = [
 [[package]]
 name = "zcash_primitives"
 version = "0.5.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#2c240852d7a5a78e323cf5784a10bf88035e078b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
 dependencies = [
  "aes",
  "bitvec 0.18.5",
