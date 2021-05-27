@@ -69,7 +69,7 @@ impl TryFrom<Amount<NonNegative>> for zcash_primitives::transaction::components:
 /// Convert a Zebra Script into a librustzcash one.
 impl From<&Script> for zcash_primitives::legacy::Script {
     fn from(script: &Script) -> Self {
-        zcash_primitives::legacy::Script(script.0.clone())
+        zcash_primitives::legacy::Script(script.as_raw_bytes().to_vec())
     }
 }
 

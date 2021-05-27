@@ -1160,7 +1160,7 @@ dependencies = [
 [[package]]
 name = "equihash"
 version = "0.1.0"
-source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#20882b2f9fc7f4b4077d7133b15102974f016214"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#f51b00d7bb774c9305f3cfed0a2de306c988d836"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -2359,7 +2359,7 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 [[package]]
 name = "orchard"
 version = "0.0.0"
-source = "git+https://github.com/zcash/orchard?branch=main#7109153e88c245c29707c46ffeb69c92998eec22"
+source = "git+https://github.com/zcash/orchard?branch=main#f82d00e40d982a0e49860afdeacc156b872268aa"
 dependencies = [
  "aes",
  "arrayvec 0.7.0",
@@ -2371,7 +2371,6 @@ dependencies = [
  "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=cae6f6af725cf1f5bc94e126a0b41e9ac602a302)",
  "nonempty",
  "pasta_curves",
- "rand 0.7.3",
  "rand 0.8.1",
  "reddsa",
  "subtle",
@@ -2907,7 +2906,7 @@ dependencies = [
 [[package]]
 name = "reddsa"
 version = "0.0.0"
-source = "git+https://github.com/str4d/redjubjub.git?rev=f1e76dbc9abf2b68cc609e874fe39f2a15b75b12#f1e76dbc9abf2b68cc609e874fe39f2a15b75b12"
+source = "git+https://github.com/str4d/redjubjub.git?rev=daab5355bf8e85289aa37804656bf85182df9eea#daab5355bf8e85289aa37804656bf85182df9eea"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -2917,7 +2916,7 @@ dependencies = [
  "group 0.9.0",
  "jubjub 0.6.0",
  "pasta_curves",
- "rand_core 0.5.1",
+ "rand_core 0.6.2",
  "serde",
  "thiserror",
  "zeroize",
@@ -4555,7 +4554,7 @@ dependencies = [
 [[package]]
 name = "zcash_note_encryption"
 version = "0.0.0"
-source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#20882b2f9fc7f4b4077d7133b15102974f016214"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#f51b00d7bb774c9305f3cfed0a2de306c988d836"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -4569,7 +4568,7 @@ dependencies = [
 [[package]]
 name = "zcash_primitives"
 version = "0.5.0"
-source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#20882b2f9fc7f4b4077d7133b15102974f016214"
+source = "git+https://github.com/ZcashFoundation/librustzcash?branch=zip-244-zebra-adjust#f51b00d7bb774c9305f3cfed0a2de306c988d836"
 dependencies = [
  "aes",
  "bitvec 0.18.5",
