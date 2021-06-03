@@ -279,12 +279,12 @@ dependencies = [
  "blake2s_simd",
  "byteorder",
  "crossbeam",
- "ff 0.9.0",
+ "ff",
  "futures 0.1.30",
  "futures-cpupool",
- "group 0.9.0",
+ "group",
  "num_cpus",
- "pairing 0.19.0",
+ "pairing",
  "rand_core 0.6.2",
  "subtle",
 ]
@@ -382,17 +382,6 @@ dependencies = [
 
 [[package]]
 name = "bitvec"
-version = "0.18.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "98fcd36dda4e17b7d7abc64cb549bf0201f4ab71e00700c798ca7e62ed3761fa"
-dependencies = [
- "funty",
- "radium 0.3.0",
- "wyz",
-]
-
-[[package]]
-name = "bitvec"
 version = "0.20.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f5011ffc90248764d7005b0e10c7294f5aa1bd87d9dd7248f4ad475b347c294d"
@@ -452,27 +441,13 @@ checksum = "8d696c370c750c948ada61c69a0ee2cbbb9c50b1019ddb86d9317157a99c2cae"
 
 [[package]]
 name = "bls12_381"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4caf0101205582491f772d60a6fcb6bcec19963e68209cb631851eeadb01421f"
-dependencies = [
- "bitvec 0.18.5",
- "ff 0.8.0",
- "group 0.8.0",
- "pairing 0.18.0",
- "rand_core 0.5.1",
- "subtle",
-]
-
-[[package]]
-name = "bls12_381"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1c56609cc42c628848e7b18e0baf42a4ef626b8c50442dc08b8094bd21d8ad32"
 dependencies = [
- "ff 0.9.0",
- "group 0.9.0",
- "pairing 0.19.0",
+ "ff",
+ "group",
+ "pairing",
  "rand_core 0.6.2",
  "subtle",
 ]
@@ -1160,7 +1135,7 @@ dependencies = [
 [[package]]
 name = "equihash"
 version = "0.1.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#acfd981b44eaa981b3791fb517cba71add5dbb92"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -1174,17 +1149,6 @@ checksum = "5f29abf4740a4778632fe27a4f681ef5b7a6f659aeba3330ac66f48e20cfa3b7"
 dependencies = [
  "indenter",
  "once_cell",
-]
-
-[[package]]
-name = "ff"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01646e077d4ebda82b73f1bca002ea1e91561a77df2431a9e79729bcc31950ef"
-dependencies = [
- "bitvec 0.18.5",
- "rand_core 0.5.1",
- "subtle",
 ]
 
 [[package]]
@@ -1482,24 +1446,12 @@ checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 
 [[package]]
 name = "group"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc11f9f5fbf1943b48ae7c2bf6846e7d827a512d1be4f23af708f5ca5d01dde1"
-dependencies = [
- "byteorder",
- "ff 0.8.0",
- "rand_core 0.5.1",
- "subtle",
-]
-
-[[package]]
-name = "group"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "61b3c1e8b4f1ca07e6605ea1be903a5f6956aec5c8a67fd44d56076631675ed8"
 dependencies = [
  "byteorder",
- "ff 0.9.0",
+ "ff",
  "rand_core 0.6.2",
  "subtle",
 ]
@@ -1572,13 +1524,13 @@ checksum = "62aca2aba2d62b4a7f5b33f3712cb1b0692779a56fb510499d5c0aa594daeaf3"
 [[package]]
 name = "halo2"
 version = "0.0.1"
-source = "git+https://github.com/zcash/halo2.git?rev=cae6f6af725cf1f5bc94e126a0b41e9ac602a302#cae6f6af725cf1f5bc94e126a0b41e9ac602a302"
+source = "git+https://github.com/zcash/halo2.git?rev=0448584333c1e262e4a7dbaefa6fdd896bdaaefb#0448584333c1e262e4a7dbaefa6fdd896bdaaefb"
 dependencies = [
  "blake2b_simd",
  "crossbeam-utils 0.8.0",
- "ff 0.9.0",
+ "ff",
  "funty",
- "group 0.9.0",
+ "group",
  "num_cpus",
  "pasta_curves",
  "rand 0.8.1",
@@ -1591,9 +1543,9 @@ source = "git+https://github.com/zcash/halo2.git?rev=dda60a363001373d564156ad033
 dependencies = [
  "blake2b_simd",
  "crossbeam-utils 0.8.0",
- "ff 0.9.0",
+ "ff",
  "funty",
- "group 0.9.0",
+ "group",
  "num_cpus",
  "pasta_curves",
  "rand 0.8.1",
@@ -1911,28 +1863,14 @@ dependencies = [
 
 [[package]]
 name = "jubjub"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "620638af3b80d23f4df0cae21e3cc9809ac8826767f345066f010bcea66a2c55"
-dependencies = [
- "bitvec 0.18.5",
- "bls12_381 0.3.1",
- "ff 0.8.0",
- "group 0.8.0",
- "rand_core 0.5.1",
- "subtle",
-]
-
-[[package]]
-name = "jubjub"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4d7e7fef85ae7b26dd89f34175b7f3c5ace64067a110c2ac86cf92407a6666ca"
 dependencies = [
  "bitvec 0.20.1",
- "bls12_381 0.4.0",
- "ff 0.9.0",
- "group 0.9.0",
+ "bls12_381",
+ "ff",
+ "group",
  "rand_core 0.6.2",
  "subtle",
 ]
@@ -2359,19 +2297,18 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 [[package]]
 name = "orchard"
 version = "0.0.0"
-source = "git+https://github.com/zcash/orchard?branch=main#7109153e88c245c29707c46ffeb69c92998eec22"
+source = "git+https://github.com/zcash/orchard?branch=main#c5aa41e2e4ed9aa4cb215ad90d1e12a643ea5880"
 dependencies = [
  "aes",
  "arrayvec 0.7.0",
  "bitvec 0.20.1",
  "blake2b_simd",
- "ff 0.9.0",
+ "ff",
  "fpe",
- "group 0.9.0",
- "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=cae6f6af725cf1f5bc94e126a0b41e9ac602a302)",
+ "group",
+ "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=0448584333c1e262e4a7dbaefa6fdd896bdaaefb)",
  "nonempty",
  "pasta_curves",
- "rand 0.7.3",
  "rand 0.8.1",
  "reddsa",
  "subtle",
@@ -2409,22 +2346,12 @@ checksum = "f2fe43bf372b08cc9ccee5144715db59c79ab00168bbe4cf0d274dc0d5f64d7f"
 
 [[package]]
 name = "pairing"
-version = "0.18.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f702cdbee9e0a6272452c20dec82465bc821116598b4eeb63e9a71a69dbf7fd"
-dependencies = [
- "ff 0.8.0",
- "group 0.8.0",
-]
-
-[[package]]
-name = "pairing"
 version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9be899ebf10363f018353dba1baabb7e83145f3683c7b83b73b93b563e3167cc"
 dependencies = [
- "ff 0.9.0",
- "group 0.9.0",
+ "ff",
+ "group",
 ]
 
 [[package]]
@@ -2471,9 +2398,9 @@ version = "0.0.0"
 source = "git+https://github.com/zcash/pasta_curves.git?rev=b55a6960dfafd7f767e2820ddf1adaa499322f98#b55a6960dfafd7f767e2820ddf1adaa499322f98"
 dependencies = [
  "blake2b_simd",
- "ff 0.9.0",
+ "ff",
  "funty",
- "group 0.9.0",
+ "group",
  "lazy_static",
  "rand 0.8.1",
  "static_assertions",
@@ -2907,17 +2834,17 @@ dependencies = [
 [[package]]
 name = "reddsa"
 version = "0.0.0"
-source = "git+https://github.com/str4d/redjubjub.git?rev=f1e76dbc9abf2b68cc609e874fe39f2a15b75b12#f1e76dbc9abf2b68cc609e874fe39f2a15b75b12"
+source = "git+https://github.com/str4d/redjubjub.git?rev=daab5355bf8e85289aa37804656bf85182df9eea#daab5355bf8e85289aa37804656bf85182df9eea"
 dependencies = [
  "blake2b_simd",
  "byteorder",
  "digest",
- "ff 0.9.0",
+ "ff",
  "funty",
- "group 0.9.0",
- "jubjub 0.6.0",
+ "group",
+ "jubjub",
  "pasta_curves",
- "rand_core 0.5.1",
+ "rand_core 0.6.2",
  "serde",
  "thiserror",
  "zeroize",
@@ -2933,7 +2860,7 @@ dependencies = [
  "byteorder",
  "digest",
  "funty",
- "jubjub 0.6.0",
+ "jubjub",
  "rand_core 0.6.2",
  "serde",
  "thiserror",
@@ -4555,43 +4482,43 @@ dependencies = [
 [[package]]
 name = "zcash_note_encryption"
 version = "0.0.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#acfd981b44eaa981b3791fb517cba71add5dbb92"
 dependencies = [
  "blake2b_simd",
  "byteorder",
  "crypto_api_chachapoly",
- "ff 0.8.0",
- "group 0.8.0",
- "rand_core 0.5.1",
+ "ff",
+ "group",
+ "rand_core 0.6.2",
  "subtle",
 ]
 
 [[package]]
 name = "zcash_primitives"
 version = "0.5.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#22a9b40e49b56408a853cd57873fd4c648321783"
+source = "git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225#acfd981b44eaa981b3791fb517cba71add5dbb92"
 dependencies = [
  "aes",
- "bitvec 0.18.5",
+ "bitvec 0.20.1",
  "blake2b_simd",
  "blake2s_simd",
- "bls12_381 0.3.1",
+ "bls12_381",
  "byteorder",
  "crypto_api_chachapoly",
  "equihash 0.1.0 (git+https://github.com/nuttycom/librustzcash?branch=feature/zip-225)",
- "ff 0.8.0",
+ "ff",
  "fpe",
  "funty",
- "group 0.8.0",
+ "group",
  "hex",
- "jubjub 0.5.1",
+ "jubjub",
  "lazy_static",
  "log",
  "nonempty",
  "orchard",
  "pasta_curves",
- "rand 0.7.3",
- "rand_core 0.5.1",
+ "rand 0.8.1",
+ "rand_core 0.6.2",
  "sha2",
  "subtle",
  "zcash_note_encryption",
@@ -4631,11 +4558,11 @@ dependencies = [
  "fpe",
  "funty",
  "futures 0.3.15",
- "group 0.9.0",
+ "group",
  "halo2 0.0.1 (git+https://github.com/zcash/halo2.git?rev=dda60a363001373d564156ad0334e2022d85a5b4)",
  "hex",
  "itertools 0.10.0",
- "jubjub 0.6.0",
+ "jubjub",
  "lazy_static",
  "primitive-types",
  "proptest",
@@ -4668,17 +4595,17 @@ version = "1.0.0-alpha.9"
 dependencies = [
  "bellman",
  "blake2b_simd",
- "bls12_381 0.4.0",
+ "bls12_381",
  "chrono",
  "color-eyre",
  "displaydoc",
  "futures 0.3.15",
  "futures-util",
- "jubjub 0.6.0",
+ "jubjub",
  "lazy_static",
  "metrics",
  "once_cell",
- "pairing 0.19.0",
+ "pairing",
  "rand 0.8.1",
  "serde",
  "spandoc",
