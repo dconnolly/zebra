@@ -10,7 +10,7 @@ use std::{
 
 use tracing::Span;
 
-use crate::{meta_addr::MetaAddrChange, types::MetaAddr, Config, PeerAddrState};
+use crate::{meta_addr::MetaAddrChange, types::MetaAddr, PeerAddrState};
 
 /// A database of peer listener addresses, their advertised services, and
 /// information on when they were last seen.
@@ -87,14 +87,15 @@ pub struct AddressMetrics {
 
 #[allow(clippy::len_without_is_empty)]
 impl AddressBook {
-    /// Construct an `AddressBook` with the given `config` and [`tracing::Span`].
-    pub fn new(config: &Config, span: Span) -> AddressBook {
+    /// Construct an `AddressBook` with the given `local_listener` and
+    /// [`tracing::Span`].
+    pub fn new(local_listener: SocketAddr, span: Span) -> AddressBook {
         let constructor_span = span.clone();
         let _guard = constructor_span.enter();
 
         let mut new_book = AddressBook {
             by_addr: HashMap::default(),
-            local_listener: config.listen_addr,
+            local_listener,
             span,
             last_address_log: None,
         };

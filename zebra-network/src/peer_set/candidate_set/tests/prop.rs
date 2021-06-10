@@ -1,4 +1,6 @@
 use std::{
+    net::SocketAddr,
+    str::FromStr,
     sync::{Arc, Mutex},
     time::{Duration, Instant},
 };
@@ -14,8 +16,8 @@ use zebra_chain::serialization::DateTime32;
 
 use super::super::{validate_addrs, CandidateSet};
 use crate::{
-    constants::MIN_PEER_CONNECTION_INTERVAL, types::MetaAddr, AddressBook, BoxError, Config,
-    Request, Response,
+    constants::MIN_PEER_CONNECTION_INTERVAL, types::MetaAddr, AddressBook, BoxError, Request,
+    Response,
 };
 
 proptest! {
@@ -54,7 +56,7 @@ proptest! {
             unreachable!("Mock peer service is never used");
         });
 
-        let mut address_book = AddressBook::new(&Config::default(), Span::none());
+        let mut address_book = AddressBook::new(SocketAddr::from_str("0.0.0.0:0").unwrap(), Span::none());
         address_book.extend(peers);
 
         let mut candidate_set = CandidateSet::new(Arc::new(Mutex::new(address_book)), peer_service);
